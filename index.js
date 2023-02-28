@@ -11,7 +11,13 @@ bot.on('message', async (msg) => {
   const text = msg.text;
 
   if(text === '/start'){
-    await bot.sendMessage(chatId, 'Received your message');
+    await bot.sendMessage(chatId, 'Выберите ниже одну из кнопок', {
+        reply_markup: {
+            keyboard: [
+                [{text: 'Заполнить форму'}]
+            ]
+        }
+    });
   }
  
 });
