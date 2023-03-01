@@ -1,4 +1,11 @@
 const TelegramBot = require('node-telegram-bot-api');
+const express = require('express');
+const cors = require('cors');
+
+const app = express();
+app.use(express.json());
+app.use(cors());
+
 
 const token = '5954431263:AAGFl7eP7gFsnBgNubuFN1DMgUZNi2r5EXc';
 const webAppUrl = 'https://reac-telegram.vercel.app/';
@@ -18,10 +25,10 @@ bot.on('message', async (msg) => {
         }
     });
 
-    await bot.sendMessage(chatId, 'Выберите кнопку инлайн', {
+    await bot.sendMessage(chatId, 'Нажмите кнопку заполить форму', {
         reply_markup: {
             inline_keyboard: [
-                [{text: 'mdkwnfaefa', web_app: {url: webAppUrl}}]
+                [{text: 'Заполнить форму', web_app: {url: webAppUrl}}]
             ]
         }
     });
@@ -35,7 +42,7 @@ bot.on('message', async (msg) => {
             await bot.sendMessage(chatId, 'Cпасибо за обратную связь');
             await bot.sendMessage(chatId, 'Ваша страна: ' + data?.country);
             await bot.sendMessage(chatId, 'Ваша улица: ' + data?.street);
-
+            await bot.sendMessage(chatId, 'Ваша занятность: ' + data?.subject);
             setTimeout(async() => {
                 await bot.sendMessage(chatId, 'Вся информация полученна нами!');
             }, 3000)
@@ -43,4 +50,14 @@ bot.on('message', async (msg) => {
             console.log(e);
         }
     }
+
+    const PORT = 8000;
+    try{
+        app.listen(PORT, async()=> {
+            console.log('Порт запустился в порту ' + `${PORT}`)
+        })
+    }catch(e){
+        console.log(e);
+    }
+
 });
