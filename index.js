@@ -26,5 +26,21 @@ bot.on('message', async (msg) => {
         }
     });
   }
- 
+
+
+    if(msg?.web_app_data?.data){
+        try {
+            const data = JSON.parse(msg?.web_app_data?.data);
+
+            await bot.sendMessage(chatId, 'Cпасибо за обратную связь');
+            await bot.sendMessage(chatId, 'Ваша страна: ' + data?.country);
+            await bot.sendMessage(chatId, 'Ваша улица: ' + data?.street);
+
+            setTimeout(async() => {
+                await bot.sendMessage(chatId, 'Вся информация полученна нами!');
+            }, 3000)
+        }catch (e) {
+            console.log(e);
+        }
+    }
 });
